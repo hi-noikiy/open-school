@@ -12,29 +12,11 @@ const teacherSchema = new mongoose.Schema({
       type: String
     }
   ],
-  announcements: {
-    type: String,
-  },
-  description: {
-    type: String,
-    trim: true
-  },
-  isBaker: {
-    type: Boolean,
-    default: false
-  },
-  userRating: {
-    type: Number,
-    default: 0
-  },
-  bakerRating: {
-    type: Number,
-    default: 0
-  },
-  email: {
-    type: String,
-    required: 'Please enter an email.'
-  }
+  announcements: [{
+    title: String,
+    body: String,
+    datePosted: Date
+  }]
 });
 
 module.exports = mongoose.model('Teacher', teacherSchema);

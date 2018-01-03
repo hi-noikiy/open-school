@@ -1,18 +1,15 @@
-require('dotenv').config();
+require('dotenv').config({ path: './variables.env' });
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-// Get the User schema and create a model from the Schema
+// Get the Teacher schema and create a model from the Schema
 const teacherController = require('./controllers/teacher');
-const studentController = require('./controllers/student');
 
 // Allow promises
 mongoose.Promise = Promise;
 // Connect with database
-mongoose.connect(process.env.DATABASE, {
-  useMongoClient: true,
-});
+mongoose.connect(process.env.DATABASE);
 
 // Define an express app and router and set a JSON parser
 const app = express();
@@ -25,37 +22,25 @@ app.use('/api', router);
 
 // Defining API Routes
 
-/*  "/api/users"
- *  GET: Retrieves all users
- *  PUT: Creates new user
+/*  "/api/teachers"
+ *  GET: Retrieves all Teachers
+ *  PUT: Creates new Teacher
  */
 
-router.route('/users')
-  .put(teacherController.putUsers)
-  .get(teacherController.getUsers);
+router.route('/teachers')
+  .put(teacherController.putTeachers)
+  .get(teacherController.getTeachers);
 
-/*  "/api/users/:id"
- *  GET: Find user by id
- *  PUT: Update user by id
- *  DELETE: Delete user by id
+/*  "/api/teachers/:id"
+ *  GET: Find Teacher by id
+ *  PUT: Update Teacher by id
+ *  DELETE: Delete Teacher by id
  */
 
-router.route('/users/:id')
-  .get(teacherController.getUserById)
-  .put(teacherController.updateUserById)
-  .delete(teacherController.deleteUserById);
-
-router.route('/users/shops/:id')
-  .get(teacherController.getUserShops);
-
-/*  "/api/shops"
- *  GET: Retrieves all shops
- *  PUT: Creates new shop
- */
-
-router.route('/shops')
-  .put(studentController.putShops)
-  .get(studentController.getShops);
+router.route('/teachers/:id')
+  .get(teacherController.getTeacherById)
+  .put(teacherController.updateTeacherById)
+  .delete(teacherController.deleteTeacherById);
 
 
 // Default GET / handling
@@ -68,4 +53,4 @@ app.use((err, req, res, next) => {
 });
 
 // Start app and listen for requests
-app.listen(2001, () => console.log('👂 Listening on port 2001!'));
+app.listen(4001, () => console.log('👂 Listening on port 4001!'));
