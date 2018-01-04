@@ -3,20 +3,31 @@
     <h2>🌞 Good morning, {{ name }}.</h2>
     <div class="classes">
       <p><b>You are currently teaching the following classes:</b></p>
-      <p><a href="#">Period 2 Literature</a></p>
-      <p><a href="#">Period 5 Literature</a></p>
-      <p><a href="#">Period 7 Literature</a></p>
+      <p v-for="oneClass in classes">{{ oneClass }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'TeacherDashboard',
   data() {
     return {
       name: 'Felina',
+      classes: [],
     };
+  },
+  created() {
+    axios.get('api/teachers')
+    .then((res) => {
+      console.log(res.data);
+      this.classes = res.data[0].classes;
+    })
+    .catch((e) => {
+      console.error(e);
+    })
   },
 };
 </script>
