@@ -19,15 +19,9 @@ export default {
       classes: [],
     };
   },
-  created() {
-    axios.get('api/teachers')
-    .then((res) => {
-      console.log(res.data);
-      this.classes = res.data[0].classes;
-    })
-    .catch((e) => {
-      console.error(e);
-    })
+  async created() {
+    const response = await axios.get('api/teachers');
+    this.classes = response.data[0].classes;
   },
 };
 </script>
